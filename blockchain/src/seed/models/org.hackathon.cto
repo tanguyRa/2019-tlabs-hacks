@@ -1,0 +1,69 @@
+namespace org.hackathon
+
+// Participants
+abstract participant User identified by userId {
+  o String userId
+  o Double wallet default=0.0
+}
+
+participant Company extends User {
+}
+
+participant Individual extends User {
+    --> Claim[] claims
+}
+
+asset Claim identified by claimId {
+    o String claimId
+    --> Individual identity
+    o String externalRessource
+}
+
+// Assets
+asset Request identified by requestId {
+    o String requestId
+    o Double participantsNumber
+    o Double paymentPerSample
+    o Requirement[] requirements
+    o MedicalInformation[] bundle
+    --> Company company
+    --> Individual[] participants
+}
+concept Requirement {
+    o String diagnostic
+    o String startDate
+    o String endDate
+    o String[] items
+}
+concept MedicalInformation {
+    o String key
+    o String value
+}
+
+// Transactions
+transaction ProcessRequest {
+    o Double participantsNumber
+    o Double paymentPerSample
+    o Requirement[] requirements
+    o String company
+}
+
+transaction RequestMatch {
+    --> Request request
+    --> Individual individual
+    o MatchStatus status
+    o MedicalInformation[] data
+}
+enum MatchStatus {
+    o YES
+    o NO
+}
+
+transaction SetupDemo {}
+transaction DeleteData {}
+
+// event RequestRegistered {
+//     --> Company company
+//     --> MedicalInformation[] requirements
+//     o Double participantsNumber
+// }

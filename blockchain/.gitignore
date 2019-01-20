@@ -1,0 +1,4 @@
+src/*.card
+src/*.bna
+**/node_modules
+**/.nyc_output

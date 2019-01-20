@@ -1,0 +1,18 @@
+<div class="content">
+  <h2 mat-dialog-title>You have a new request</h2>
+  <mat-dialog-content>
+    <p>Company : <i>{{request.company}}</i></p>
+    <p>Offer :<b> {{request.paymentPerSample}} €</b></p>
+    <p> Diagnotic searched : <b>{{request.requirements[0].diagnotic}}</b>
+      <p>
+        <mat-list role="list" *ngFor="let item of request.requirements[0].items">
+          <mat-list-item role="listitem">{{item}}</mat-list-item>
+        </mat-list>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between center">
+    <button mat-button mat-dialog-close color="warn">Refuse</button>
+    <button mat-button mat-dialog-close color="primary" (click)="submit()">
+      Submit
+    </button>
+  </mat-dialog-actions>
+</div>

@@ -1,0 +1,63 @@
+<mat-toolbar color="primary" class="center">
+
+  <span>MShare </span>
+
+  <span class="toolbar-spacer"></span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon class="toolbar-icon">more_vert</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon>account_circle</mat-icon>
+      <span>account</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon>power_settings_new</mat-icon>
+      <span>logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+<div class="content">
+
+  <div fxLayout="row" fxLayoutAlign="space-around start">
+    <div>&nbsp;</div>
+    <div fxLayout="column" fxLayoutAlign="space-between center">
+      <div class="avatar">
+        <img src="../../../assets/img/default-avatar.png" alt="Avatar">
+        <div fxLayout="column" fxLayoutAlign="space-around center" class="space">
+          <span>Duflot Axel</span>
+          <span>25/02/1993</span>
+          <span>French</span>
+        </div>
+      </div>
+    </div>
+    <button mat-raised-button color="primary" class="btn-withdraw" (click)="withdraw()">{{account}} €</button>
+
+  </div>
+
+  <mat-tree [dataSource]="nestedDataSource" [treeControl]="nestedTreeControl" class="tree space">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+      <li class="mat-tree-node">
+        <button mat-icon-button disabled></button>
+        {{node.filename}}: {{node.type}}
+      </li>
+    </mat-tree-node>
+
+    <mat-nested-tree-node *matTreeNodeDef="let node; when: hasNestedChild">
+      <li>
+        <div class="mat-tree-node">
+          <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{nestedTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          {{node.filename}}
+        </div>
+        <ul [class.tree-invisible]="!nestedTreeControl.isExpanded(node)">
+          <ng-container matTreeNodeOutlet></ng-container>
+        </ul>
+      </li>
+    </mat-nested-tree-node>
+  </mat-tree>
+</div>
